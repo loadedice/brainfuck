@@ -8,8 +8,8 @@ def bf_parse(program, strict=False):
     Takes a brainfuck string, if strict == True checks that it's all valid brainfuck
     returns a dictionary to help deal with jumping around in the program
 
-    I had other ideas about how to do this, but this was the easist to do
-    and I think it's kinda nice but also not very efficent in terms of memory useage
+    I had other ideas about how to do this, but this was the easiest to do
+    and I think it's kinda nice but also not very efficient in terms of memory usage
 
     If you can't tell I'm just playing by ear here and things are probably not very good.
     """
@@ -47,7 +47,7 @@ def bf_eval(program, memory_size=30000):
     while program_counter < len(program):
         symbol = program[program_counter]
 
-        # Because Python lets you index arrays with negative indecies...
+        # Because Python lets you index arrays with negative indices...
         if 0 > data_pointer or 0 > program_counter:
             raise IndexError("Index out of bounds")
 
@@ -86,7 +86,7 @@ def main():
         with open(argv[1], 'r') as f:
             program = f.read().strip()
     else:
-        program = input("Enter the brainfuck pogram: ")
+        program = input("Enter the brainfuck program: ")
 
     bf_eval(program)
 

@@ -1,7 +1,7 @@
 # brainfuck
-a shitty brainfuck intepreter written in python
+a shitty brainfuck interpreter written in python
 
-to give it a program you either give the path to the file as the first arguement or evoke main.py with no arguments and supply the program in stdin (1 line only)
+to give it a program you either give the path to the file as the first argument or evoke main.py with no arguments and supply the program in stdin (1 line only)
 
 each cell is 8 bits, there are 30,000 cells by default
 

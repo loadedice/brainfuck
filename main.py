@@ -21,13 +21,18 @@ def bf_parse(program, strict=False):
         if symbol == '[':
             stack.append(position)
         elif symbol == ']':
+            if len(stack) == 0:
+                raise SyntaxError("`[` at character {p} does not have a corresponding `[`".format(p=position))
             destination = stack.pop()
             # Because we may need to jump back up to the '[' to check the condition to see if we need to jump out
             # This could probably be done with a stack in the bf_eval function. Oh well.
             jump_dict[position] = destination
             jump_dict[destination] = position
         elif strict and symbol not in "><+-.,":
-            raise SyntaxError("`{s}` at {p} is not a valid brainfuck symbol".format(s=symbol, p=position))
+            raise SyntaxError("`{s}` at character {p} is not a valid brainfuck symbol".format(s=symbol, p=position))
+
+    if len(stack) != 0:
+        raise SyntaxError("Square brackets are not balanced")
 
     return jump_dict
 
@@ -63,12 +68,13 @@ def bf_eval(program, memory_size=30000):
             print(chr(data[data_pointer].value), end='')
         elif symbol == ',':
            char = stdin.read(1)
-           # If we read nothing then quit.
+           # If we read an empty string then make it 0
            if char == '':
-               break
+               char = '\0'
            data[data_pointer] = c_ubyte(ord(char))
         elif symbol == '[':
-            # If it is false then
+            # If it is false then jump to the end.
+            # the program counter will be incremented after this block
             if not data[data_pointer]:
                 program_counter = jump_dict[program_counter]
         elif symbol == ']':
